@@ -11,12 +11,6 @@
       "name": "Terminar ya",
       "responsible": "Ernesto",
       "isCompleted": false
-    },
-    {
-      "name": "Acabar y comer",
-      "responsible": "Todos",
-      "id": 70983,
-      "isCompleted": false
     }
   ],
   "posts": [

@@ -55,22 +55,28 @@ export class TodoList extends Component implements iComponent {
 
     handlerButton(ev: Event) {
         const selectId = (<HTMLElement>ev.target).dataset.id as string;
-        console.log('click', selectId);
-        this.tasksState = this.tasksState.filter(
-            (item) => item.id !== +selectId
-        );
-        this.render();
+        this.storeService.deleteTask(+selectId).then((resp) => {
+            if (resp.ok) {
+                this.tasksState = this.tasksState.filter(
+                    (item) => item.id !== +selectId
+                );
+                this.render();
+            }
+        });
     }
 
     handlerCheck(ev: Event) {
-        const selectId = (<HTMLElement>ev.target).dataset.id as string;
-        console.log('check', selectId);
-        this.tasksState = this.tasksState.map((item) => ({
-            ...item,
-            isCompleted:
-                item.id === +selectId ? !item.isCompleted : item.isCompleted,
-        }));
-        this.render();
+        const selectId = Number((<HTMLElement>ev.target).dataset.id as string);
+        const selectedTask = this.tasksState.find(
+            (item) => item.id === selectId
+        ) as iTaskModel;
+        selectedTask.isCompleted = !selectedTask.isCompleted;
+        this.storeService.updateTask(selectedTask).then((updatedItem) => {
+            this.tasksState = this.tasksState.map((item) =>
+                item.id === selectId ? updatedItem : item
+            );
+            this.render();
+        });
     }
 
     addTasks(task: iTaskModel) {

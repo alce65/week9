@@ -22,8 +22,8 @@ export class HttpTasks {
             headers: { 'Content-Type': 'application/json' },
         }).then((resp) => resp.json());
     }
-    deleteTask(task: iTaskModel) {
-        return fetch(this.url + task.id, {
+    deleteTask(id: iTaskModel['id']) {
+        return fetch(this.url + id, {
             method: 'DELETE',
         });
     }
